@@ -3,52 +3,60 @@ import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
 
 const customers = [
-  { id:"1", name:"Ramesh", balance:300 },
-  { id:"2", name:"Rahul", balance:-200 },
-  { id:"3", name:"Amit", balance:1200 }
+  { id: "1", name: "Ramesh", balance: 300 },
+  { id: "2", name: "Rahul", balance: -200 },
+  { id: "3", name: "Amit", balance: 1200 },
 ];
 
 export default function Customers() {
-
   const [menuVisible, setMenuVisible] = useState(false);
 
   return (
     <View style={styles.container}>
 
-      <Text style={styles.header}>Customers</Text>
+      {/* HEADER */}
+      <View style={styles.header}>
+        <View style={styles.headerRow}>
+          <Text style={styles.headerTitle}>Customers</Text>
 
-      <FlatList
-        data={customers}
-        keyExtractor={(item)=>item.id}
-        renderItem={({item}) => (
-          <View style={styles.card}>
-            <Text style={styles.name}>{item.name}</Text>
+          <Ionicons name="search-outline" size={24} color="#fff" />
+        </View>
+      </View>
 
-            <Text
-              style={[
-                styles.balance,
-                item.balance >= 0 ? styles.green : styles.red
-              ]}
-            >
-              ₹ {Math.abs(item.balance)}
-            </Text>
-          </View>
-        )}
-      />
+      {/* CUSTOMER LIST */}
+      <View style={styles.content}>
+        <FlatList
+          data={customers}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => (
+            <View style={styles.card}>
+              <Text style={styles.name}>{item.name}</Text>
 
-      {/* Floating Button */}
-      <Pressable style={styles.fab} onPress={()=>setMenuVisible(true)}>
+              <Text
+                style={[
+                  styles.balance,
+                  item.balance >= 0 ? styles.green : styles.red,
+                ]}
+              >
+                ₹ {Math.abs(item.balance)}
+              </Text>
+            </View>
+          )}
+        />
+      </View>
+
+      {/* FLOATING BUTTON */}
+      <Pressable style={styles.fab} onPress={() => setMenuVisible(true)}>
         <Ionicons name="add" size={30} color="#fff" />
       </Pressable>
 
-      {/* Bottom Sheet */}
-      <Modal
-        visible={menuVisible}
-        animationType="slide"
-        transparent
-      >
-        <Pressable style={styles.overlay} onPress={()=>setMenuVisible(false)}>
+      {/* BOTTOM SHEET */}
+      <Modal visible={menuVisible} animationType="slide" transparent>
 
+        <Pressable
+          style={styles.overlay}
+          onPress={() => setMenuVisible(false)}
+        >
           <View style={styles.menu}>
 
             <Pressable style={styles.menuItem}>
@@ -67,8 +75,8 @@ export default function Customers() {
             </Pressable>
 
           </View>
-
         </Pressable>
+
       </Modal>
 
     </View>
@@ -77,79 +85,105 @@ export default function Customers() {
 
 const styles = StyleSheet.create({
 
-  container:{
-    flex:1,
-    backgroundColor:"#f2f3f7",
-    padding:20
+  container: {
+    flex: 1,
+    backgroundColor: "#f2f3f7",
   },
 
-  header:{
-    fontSize:24,
-    fontWeight:"bold",
-    marginBottom:15
+  /* HEADER */
+
+  header: {
+    backgroundColor: "#2e4a7d",
+    paddingTop: 55,
+    paddingBottom: 30,
+    paddingHorizontal: 20,
+    borderBottomLeftRadius: 25,
+    borderBottomRightRadius: 25,
   },
 
-  card:{
-    backgroundColor:"#fff",
-    padding:16,
-    borderRadius:10,
-    marginBottom:10,
-    flexDirection:"row",
-    justifyContent:"space-between"
+  headerRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
 
-  name:{
-    fontSize:18
+  headerTitle: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#fff",
   },
 
-  balance:{
-    fontSize:18,
-    fontWeight:"bold"
+  /* CONTENT */
+
+  content: {
+    padding: 20,
   },
 
-  green:{
-    color:"#2e7d32"
+  card: {
+    backgroundColor: "#fff",
+    padding: 16,
+    borderRadius: 12,
+    marginBottom: 10,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    elevation: 2,
   },
 
-  red:{
-    color:"#d32f2f"
+  name: {
+    fontSize: 18,
   },
 
-  fab:{
-    position:"absolute",
-    bottom:30,
-    right:20,
-    backgroundColor:"#2e7d32",
-    width:60,
-    height:60,
-    borderRadius:30,
-    justifyContent:"center",
-    alignItems:"center",
-    elevation:6
+  balance: {
+    fontSize: 18,
+    fontWeight: "bold",
   },
 
-  overlay:{
-    flex:1,
-    justifyContent:"flex-end",
-    backgroundColor:"rgba(0,0,0,0.4)"
+  green: {
+    color: "#2e7d32",
   },
 
-  menu:{
-    backgroundColor:"#fff",
-    padding:20,
-    borderTopLeftRadius:20,
-    borderTopRightRadius:20
+  red: {
+    color: "#d32f2f",
   },
 
-  menuItem:{
-    flexDirection:"row",
-    alignItems:"center",
-    paddingVertical:15
+  /* FLOATING BUTTON */
+
+  fab: {
+    position: "absolute",
+    bottom: 90,
+    right: 20,
+    backgroundColor: "#2e4a7d",
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    justifyContent: "center",
+    alignItems: "center",
+    elevation: 6,
   },
 
-  menuText:{
-    fontSize:18,
-    marginLeft:10
-  }
+  /* BOTTOM SHEET */
 
+  overlay: {
+    flex: 1,
+    justifyContent: "flex-end",
+    backgroundColor: "rgba(0,0,0,0.4)",
+  },
+
+  menu: {
+    backgroundColor: "#fff",
+    padding: 20,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+  },
+
+  menuItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: 15,
+  },
+
+  menuText: {
+    fontSize: 18,
+    marginLeft: 10,
+  },
 });

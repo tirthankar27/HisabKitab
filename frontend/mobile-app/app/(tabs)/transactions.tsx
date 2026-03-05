@@ -9,60 +9,89 @@ const transactions = [
 export default function Transactions() {
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Transactions</Text>
 
-      <FlatList
-        data={transactions}
-        keyExtractor={(item)=>item.id}
-        renderItem={({item}) => (
-          <View style={styles.card}>
-            <Text style={styles.name}>{item.name}</Text>
+      {/* HEADER */}
+      <View style={styles.header}>
+        <Text style={styles.headerTitle}>Transactions</Text>
+      </View>
 
-            <Text
-              style={[
-                styles.amount,
-                item.type === "credit" ? styles.green : styles.red
-              ]}
-            >
-              ₹ {item.amount}
-            </Text>
-          </View>
-        )}
-      />
+      {/* LIST */}
+      <View style={styles.content}>
+        <FlatList
+          data={transactions}
+          keyExtractor={(item)=>item.id}
+          renderItem={({item}) => (
+            <View style={styles.card}>
+              <Text style={styles.name}>{item.name}</Text>
+
+              <Text
+                style={[
+                  styles.amount,
+                  item.type === "credit" ? styles.green : styles.red
+                ]}
+              >
+                ₹ {item.amount}
+              </Text>
+            </View>
+          )}
+        />
+      </View>
+
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+
   container:{
     flex:1,
-    backgroundColor:"#f2f3f7",
-    padding:20
+    backgroundColor:"#f2f3f7"
   },
+
   header:{
+    backgroundColor:"#2e4a7d",
+    paddingTop:50,
+    paddingBottom:30,
+    paddingHorizontal:20,
+    borderBottomLeftRadius:25,
+    borderBottomRightRadius:25
+  },
+
+  headerTitle:{
     fontSize:24,
     fontWeight:"bold",
-    marginBottom:15
+    color:"#fff"
   },
+
+  content:{
+    padding:20
+  },
+
   card:{
     backgroundColor:"#fff",
     padding:16,
-    borderRadius:10,
+    borderRadius:12,
     marginBottom:10,
     flexDirection:"row",
-    justifyContent:"space-between"
+    justifyContent:"space-between",
+    elevation:2
   },
+
   name:{
     fontSize:18
   },
+
   amount:{
     fontSize:18,
     fontWeight:"bold"
   },
+
   green:{
     color:"#2e7d32"
   },
+
   red:{
     color:"#d32f2f"
   }
+
 });
