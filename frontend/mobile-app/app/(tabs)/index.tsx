@@ -1,7 +1,13 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Pressable } from "react-native";
+import { useState } from "react";
+import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 
 export default function Home() {
+  const [showMenu, setShowMenu] = useState(false);
+  const handleLogout = () => {
+    router.replace("/login");
+  };
   return (
     <View style={styles.container}>
 
@@ -15,10 +21,39 @@ export default function Home() {
 
           <View style={styles.icons}>
             <Ionicons name="notifications-outline" size={24} color="#fff" />
-            <Ionicons name="person-circle-outline" size={26} color="#fff" style={{marginLeft:15}}/>
+            <Pressable onPress={() => setShowMenu(!showMenu)}>
+              <Ionicons
+                name="person-circle-outline"
+                size={26}
+                color="#fff"
+                style={{ marginLeft:15 }}
+              />
+            </Pressable>
           </View>
         </View>
       </View>
+
+      {showMenu && (
+        <View style={styles.dropdown}>
+
+          <Pressable
+            style={styles.menuItem}
+            onPress={() => {
+              setShowMenu(false);
+              router.push("/profile");
+            }}
+          >
+            <Text>Profile</Text>
+          </Pressable>
+
+          <View style={styles.menuDivider}></View>
+
+          <Pressable style={styles.menuItem} onPress={handleLogout}>
+            <Text style={{color:"#d32f2f"}}>Logout</Text>
+          </Pressable>
+
+        </View>
+      )}
 
       {/* SUMMARY CARD */}
       <View style={styles.summaryCard}>
@@ -43,7 +78,8 @@ const styles = StyleSheet.create({
 
   container:{
     flex:1,
-    backgroundColor:"#f2f3f7"
+    backgroundColor:"#f2f3f7",
+    overflow: "visible",
   },
 
   header:{
@@ -52,7 +88,8 @@ const styles = StyleSheet.create({
     paddingBottom:80,
     paddingHorizontal:20,
     borderBottomLeftRadius:25,
-    borderBottomRightRadius:25
+    borderBottomRightRadius:25,
+    overflow: "visible",
   },
 
   headerRow:{
@@ -113,6 +150,28 @@ const styles = StyleSheet.create({
     fontSize:20,
     fontWeight:"bold",
     color:"#d32f2f"
-  }
+  },
+  dropdown:{
+    position:"absolute",
+    top:110,
+    right:20,
+    backgroundColor:"#fff",
+    borderRadius:10,
+    width:150,
+    elevation:8,
+    shadowColor:"#000",
+    shadowOpacity:0.2,
+    shadowRadius:8,
+    zIndex: 1000,
+  },
 
+  menuItem:{
+    paddingVertical:10,
+    paddingHorizontal:15
+  },
+
+  menuDivider:{
+  height:1,
+  backgroundColor:"#eee"
+}
 });
